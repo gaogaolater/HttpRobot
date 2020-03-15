@@ -64,7 +64,7 @@ void InitServer()
     http_server->AddHandler("/api/get_login_status", HelperService::GetLoginStatus);
     http_server->AddHandler("/api/get_myinfo", HelperService::GetMyInfo);
     http_server->AddHandler("/api/get_qrcode", HelperService::GetQRCode);
-    http_server->AddHandler("/api/send_text_msg", HelperService::SendTextMsg);
+    http_server->AddHandler("/api/send_text_msg", HelperService::SendMsg);
     http_server->Start();
 }
 
