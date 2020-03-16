@@ -15,15 +15,17 @@ string HelperService::GetQRCode(http_message* http_message)
 		return "{code:-1203,msg:'ÄúÒÑµÇÂ¼'}";
 	}
 	GotoQrCode();
+	/*Sleep(500);
 	char qrcodeStr[500] = { 0 };
 	sprintf_s(qrcodeStr, "http://weixin.qq.com/x/%s", (char*)*((DWORD*)(getWeChatWinAddr() + LOGINQRCODESTR)));
-	return "{code:0,data:'"+ string(qrcodeStr) +"'}";
+	return "{code:0,data:'" + string(qrcodeStr) + "'}";*/
+	return "{code:0}";
 }
 
 string HelperService::GetLoginStatus(http_message* http_message)
 {
 	string login = isLogin() == 0 ? "false" : "true";
-	return "{code:0,data:"+ login +"}";
+	return "{code:0,data:" + login + "}";
 }
 
 string HelperService::GetMyInfo(http_message* http_message)
@@ -50,9 +52,17 @@ string HelperService::GetMyInfo(http_message* http_message)
 	root["data"] = data;
 	return root.toStyledString();
 }
-
-INT getContactCallBackJson(void* para, int nColumn, char** colValue, char** colName)
+Json::Value contactList;
+int getContactCallBackJson(void* para, int nColumn, char** colValue, char** colName)
 {
+	Json::Value row;
+	for (int i = 0; i < nColumn; i++)
+	{
+		char data[1000] = { 0 };
+		sprintf_s(data, "%s", colValue[i]);
+		row[*(colName + i)] = UTF8ToUnicode(data);
+	}
+	contactList.append(row);
 	return 0;
 }
 
@@ -61,7 +71,19 @@ string HelperService::GetContactInfo(http_message* http_message)
 	if (isLogin() == 0) {
 		return "{code:-1200,msg:'ÄúÎ´µÇÂ¼'}";
 	}
-	return "";
+	char* sqlErrmsg = NULL;
+	string sql = "select Contact.UserName,Contact.Alias,Contact.NickName,Contact.Remark,ContactHeadImgUrl.bigHeadImgUrl "
+		" from Contact LEFT OUTER JOIN ContactHeadImgUrl ON Contact.UserName = ContactHeadImgUrl.usrName";
+	runSql("MicroMsg.db", sql, getContactCallBackJson, sqlErrmsg);
+	if (sqlErrmsg != NULL) {
+		return "{code:-1230,msg:'" + string(sqlErrmsg) + "'}";
+	}
+	Json::Value root;
+	root["code"] = 0;
+	root["data"] = contactList;
+	string result = root.toStyledString();
+	contactList.clear();
+	return result;
 }
 
 string HelperService::SendMsg(http_message* http_message)
