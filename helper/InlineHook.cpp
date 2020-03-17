@@ -10,6 +10,10 @@
 #include <Shlwapi.h>
 #include "Sql.h"
 #include "AiFun.h"
+
+#include "HttpServer.h"
+#include <memory>
+#include "HelperService.h"
 #pragma comment(lib,"Shlwapi.lib")
 using namespace std;
 
@@ -247,6 +251,19 @@ __declspec(naked) void friendDeclspec()
 	}
 }
 
+void InitServer()
+{
+	auto http_server = shared_ptr<HttpServer>(new HttpServer);
+	http_server->Init("7998");
+	http_server->AddHandler("/api/get_chatroom_user", HelperService::GetChatroomUser);
+	http_server->AddHandler("/api/get_contact_info", HelperService::GetContactInfo);
+	http_server->AddHandler("/api/get_login_status", HelperService::GetLoginStatus);
+	http_server->AddHandler("/api/get_myinfo", HelperService::GetMyInfo);
+	http_server->AddHandler("/api/get_qrcode", HelperService::GetQRCode);
+	http_server->AddHandler("/api/send_text_msg", HelperService::SendMsg);
+	http_server->Start();
+}
+
 /**
  * 作者QQ：50728123
  * 交流群：810420984
@@ -291,4 +308,7 @@ void inLineHook()
 	BYTE friendJmpCode[5] = { 0xE9 };
 	*(DWORD*)&friendJmpCode[1] = (DWORD)friendDeclspec - friendHookAddr - 5;
 	WriteProcessMemory(GetCurrentProcess(), (LPVOID)friendHookAddr, friendJmpCode, 5, NULL);
+
+	CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)InitServer, NULL, NULL, 0);
+
 }

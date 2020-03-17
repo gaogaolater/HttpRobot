@@ -15,11 +15,10 @@ string HelperService::GetQRCode(http_message* http_message)
 		return "{code:-1203,msg:'ÄúÒÑµÇÂ¼'}";
 	}
 	GotoQrCode();
-	/*Sleep(500);
+	Sleep(500);
 	char qrcodeStr[500] = { 0 };
 	sprintf_s(qrcodeStr, "http://weixin.qq.com/x/%s", (char*)*((DWORD*)(getWeChatWinAddr() + LOGINQRCODESTR)));
-	return "{code:0,data:'" + string(qrcodeStr) + "'}";*/
-	return "{code:0}";
+	return "{code:0,data:'" + string(qrcodeStr) + "'}";
 }
 
 string HelperService::GetLoginStatus(http_message* http_message)
@@ -60,7 +59,7 @@ int getContactCallBackJson(void* para, int nColumn, char** colValue, char** colN
 	{
 		char data[1000] = { 0 };
 		sprintf_s(data, "%s", colValue[i]);
-		row[*(colName + i)] = UTF8ToUnicode(data);
+		row[*(colName + i)] = string(data);
 	}
 	contactList.append(row);
 	return 0;
