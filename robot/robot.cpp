@@ -13,9 +13,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "resource.h"
-#include "HttpServer.h"
 #include "RobotService.h"
-
+#include "json/json.h"
+#include "HttpServer.h"
 using namespace std;
 
 INT_PTR CALLBACK wechatRobot(
@@ -37,6 +37,7 @@ int APIENTRY wWinMain(
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
+	Json::Value root;
 
 	//创建互斥体，防止主程序多开
 	HANDLE hThread = ::CreateMutex(NULL, FALSE, L"_CodeByDog_Wechat_");
@@ -48,7 +49,7 @@ int APIENTRY wWinMain(
 		}
 		return 0;
 	}
-	CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)InitServer, NULL, 0, NULL);
+	//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)InitServer, NULL, 0, NULL);
 	//渲染窗口
 	DialogBox(hInstance, MAKEINTRESOURCE(ROBOT_MAIN), NULL, &wechatRobot);
 	return 0;

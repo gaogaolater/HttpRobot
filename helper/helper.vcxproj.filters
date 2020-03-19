@@ -36,6 +36,9 @@
     <Filter Include="群组相关">
       <UniqueIdentifier>{dd2feaa4-5c02-4979-b609-5cd549993d16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Http">
+      <UniqueIdentifier>{8effbeb9-2227-4f8c-8d0e-7941b781d9dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="helper.cpp">
@@ -65,17 +68,14 @@
     <ClCompile Include="chatroom.cpp">
       <Filter>群组相关</Filter>
     </ClCompile>
-    <ClCompile Include="EasyLog.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="HelperService.cpp">
+      <Filter>Http</Filter>
     </ClCompile>
     <ClCompile Include="HttpServer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="HelperService.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Http</Filter>
     </ClCompile>
     <ClCompile Include="mongoose.c">
-      <Filter>源文件</Filter>
+      <Filter>Http</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,17 +112,14 @@
     <ClInclude Include="chatroom.h">
       <Filter>群组相关</Filter>
     </ClInclude>
-    <ClInclude Include="EasyLog.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="HelperService.h">
+      <Filter>Http</Filter>
     </ClInclude>
     <ClInclude Include="HttpServer.h">
-      <Filter>头文件</Filter>
+      <Filter>Http</Filter>
     </ClInclude>
     <ClInclude Include="mongoose.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="HelperService.h">
-      <Filter>头文件</Filter>
+      <Filter>Http</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

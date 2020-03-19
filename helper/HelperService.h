@@ -4,7 +4,7 @@
 using namespace std;
 class HelperService
 {
-public :
+public:
 	static string GetQRCode(http_message* http_message);
 	static string GetLoginStatus(http_message* http_message);
 	static string GetMyInfo(http_message* http_message);

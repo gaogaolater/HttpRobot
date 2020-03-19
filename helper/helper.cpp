@@ -12,7 +12,6 @@
 #include "Sql.h"
 #include "AiFun.h"
 #include "chatroom.h"
-
 #pragma comment(lib,"Shlwapi.lib")
 using namespace std;
 
@@ -50,8 +49,6 @@ BOOL APIENTRY DllMain(
     }
     return TRUE;
 }
-
-
 
 /**
  * ×÷ÕßQQ£º50728123

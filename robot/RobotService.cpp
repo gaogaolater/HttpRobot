@@ -21,6 +21,7 @@ string RobotService::CloseAllWx(http_message* http_message) {
 }
 
 string RobotService::StartWx(http_message* http_message) {
+	//TODO::判断是否已经打开微信
 	HKEY hKey;
 	if (RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Tencent\\WeChat", 0, KEY_ALL_ACCESS, &hKey) != ERROR_SUCCESS)
 	{

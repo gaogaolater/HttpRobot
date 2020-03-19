@@ -79,7 +79,7 @@ Information* getMyInfo()
 	return info;
 }
 
-VOID getUserInfo(wchar_t* wxid)
+void getUserInfo(wchar_t* wxid)
 {
 	struct wxMsg
 	{
