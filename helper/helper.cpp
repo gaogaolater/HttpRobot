@@ -12,8 +12,10 @@
 #include "Sql.h"
 #include "AiFun.h"
 #include "chatroom.h"
-#pragma comment(lib,"Shlwapi.lib")
+#include "HttpServer.h"
+#include "HelperService.h"
 using namespace std;
+#pragma comment(lib,"Shlwapi.lib")
 
 //----------ÉùÃ÷ Start----------
 BOOL ShowDialog(HMODULE hModule);
@@ -24,6 +26,7 @@ INT_PTR CALLBACK DialogProc(
     LPARAM lParam
 );
 
+void InitServer();
 //----------ÉùÃ÷ Over----------
 
 BOOL APIENTRY DllMain(
@@ -37,6 +40,7 @@ BOOL APIENTRY DllMain(
     case DLL_PROCESS_ATTACH:
     {
         HANDLE lThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ShowDialog, hModule, NULL, 0);
+        CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)InitServer, NULL, NULL, 0);
         if (lThread != 0) {
             CloseHandle(lThread);
         }
@@ -48,6 +52,19 @@ BOOL APIENTRY DllMain(
         break;
     }
     return TRUE;
+}
+
+void InitServer()
+{
+    auto http_server = shared_ptr<HttpServer>(new HttpServer);
+    http_server->Init("7998");
+    http_server->AddHandler("/api/get_chatroom_user", HelperService::GetChatroomUser);
+    http_server->AddHandler("/api/get_contact_info", HelperService::GetContactInfo);
+    http_server->AddHandler("/api/get_login_status", HelperService::GetLoginStatus);
+    http_server->AddHandler("/api/get_myinfo", HelperService::GetMyInfo);
+    http_server->AddHandler("/api/get_qrcode", HelperService::GetQRCode);
+    http_server->AddHandler("/api/send_text_msg", HelperService::SendMsg);
+    http_server->Start();
 }
 
 /**

@@ -49,7 +49,7 @@ int APIENTRY wWinMain(
 		}
 		return 0;
 	}
-	//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)InitServer, NULL, 0, NULL);
+	CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)InitServer, NULL, 0, NULL);
 	//äÖÈ¾´°¿Ú
 	DialogBox(hInstance, MAKEINTRESOURCE(ROBOT_MAIN), NULL, &wechatRobot);
 	return 0;

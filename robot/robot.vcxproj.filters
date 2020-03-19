@@ -41,9 +41,6 @@
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="RobotService.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="EasyLog.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -54,6 +51,9 @@
       <Filter>Http</Filter>
     </ClInclude>
     <ClInclude Include="mongoose.h">
+      <Filter>Http</Filter>
+    </ClInclude>
+    <ClInclude Include="RobotService.h">
       <Filter>Http</Filter>
     </ClInclude>
   </ItemGroup>

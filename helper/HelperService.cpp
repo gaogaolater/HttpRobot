@@ -111,7 +111,7 @@ string HelperService::GetChatroomUser(http_message* http_message)
 	if (isLogin() == 0) {
 		return "{code:-1200,msg:'ÄúÎ´µÇÂ¼'}";
 	}
-	return string();
+	return string("{code:-1,msg:'Î´ÊµÏÖ'}");
 }
 
 string HelperService::Logout(http_message* http_message)
