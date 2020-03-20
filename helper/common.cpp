@@ -1,6 +1,9 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <Windows.h>
 #include <string>
 #include <vector>
+#include <time.h>
+#include "common.h"
 DWORD weChatWinAddress = 0;
 HWND globalHwnd;
 
@@ -129,3 +132,24 @@ wchar_t* StrToWchar(std::string str)
     return wStr;
     delete[] wStr;
 }
+
+void WriteLog(std::string log)
+{
+    try
+    {
+        std::ofstream ofs;
+        time_t t = time(0);
+        char tmp[64];
+        strftime(tmp, sizeof(tmp), "[%Y-%m-%d %X]", localtime(&t));
+        ofs.open("C:\\log\\PipeLog.txt", std::ofstream::app);
+        ofs << tmp << " - ";
+        ofs.write(log.c_str(), log.size());
+        ofs << std::endl;
+        ofs.close();
+    }
+    catch (...)
+    {
+
+    }
+}
+

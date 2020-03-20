@@ -49,7 +49,8 @@ string HelperService::GetMyInfo(http_message* http_message)
 	data["wxid"] = UnicodeToUtf8(info->wxid);
 	root["code"] = 0;
 	root["data"] = data;
-	return root.toStyledString();
+	string result = root.toStyledString();
+	return result;
 }
 Json::Value contactList;
 int getContactCallBackJson(void* para, int nColumn, char** colValue, char** colName)
