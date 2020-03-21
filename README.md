@@ -1,7 +1,7 @@
 # HttpRobot
 
 ### 背景
-* 基于https://github.com/codeByDog/pcWechat.git改造，增加了http接口
+* 基于https://github.com/codeByDog/pcWechat.git 改造，增加了http接口
 
 ### 使用方法
 * 点击robot.exe，启动mfc的同时会启动httpserver,访问http://localhost:7999/，可测试相关功能
