@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+</head>
+
+<body>
+    
+    <div id="qrcode"></div>
+    <button onclick="closewx()">关闭微信</button>
+    <button onclick="openwx()">打开微信</button>
+    <br/>
+    <br/>
+    <button onclick="getQrcode()">获取二维码</button>
+    <br/>
+    <br/>
+    <div id="qrcode"></div>
+    <select id="list"></select>
+    <textarea id="msg"></textarea>
+    <button onclick="sendmsg()">发送消息</button>
+    
+    <script>
+        function openwx(){
+            $.get('/api/start_wx', function (resp) {
+                console.log(resp);
+                $("#iframe").attr("src","http://localhost:7998/chat.html");
+            })
+        }
+        function closewx(){
+            $.get('/api/close_wx', function (resp) {
+                console.log(resp);
+            })
+        }
+        var header = "http://localhost:7998/api/";
+        function sendmsg(){
+            var msg = $("#msg").val();
+            var wxid = $("#list").val();
+            console.log(msg);
+            console.log(wxid);
+            $.ajax({
+                url:header+'send_text_msg',
+                type:"POST",
+                data:{
+                    msg:msg,
+                    wxid:wxid
+                },
+                success:function(resp){
+                    console.log(resp);
+                }
+            });
+        }
+        function getContactList() {
+            $.get(header+'get_contact_info', function (resp) {
+                var list = JSON.parse(resp.data);
+                var options = "";
+                list.forEach(i=>{
+                    options+=`<option value="${i.UserName}">${i.NickName}</option>`;
+                });
+                $("#list").html(options);
+            })
+        }
+        function getQrcode(){
+            $.ajax({
+                url:header+'get_qrcode',
+                success:function(resp){
+                    console.log(resp);
+                    $('#qrcode').qrcode(resp.data);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

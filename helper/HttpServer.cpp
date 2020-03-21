@@ -1,5 +1,6 @@
 #include <utility>
 #include "HttpServer.h"
+#include "common.h"
 
 std::string HttpServer::s_web_dir;
 mg_serve_http_opts HttpServer::s_server_option;
@@ -9,14 +10,14 @@ std::unordered_set<mg_connection*> HttpServer::s_websocket_session_set;
 void HttpServer::Init(const std::string& port)
 {
 	m_port = port;
-	s_web_dir = "C:/lab/Static";
+	s_web_dir = "../www/";
 	s_server_option.enable_directory_listing = "yes";
 	s_server_option.document_root = s_web_dir.c_str();
 
 	// 其他http设置
 
 	// 开启 CORS，本项只针对主页加载有效
-	// s_server_option.extra_headers = "Access-Control-Allow-Origin: *";
+	s_server_option.extra_headers = "Access-Control-Allow-Origin: *";
 }
 
 bool HttpServer::Start()
@@ -85,21 +86,22 @@ void HttpServer::RemoveHandler(const std::string& url)
 
 void HttpServer::SendHttpRsp(mg_connection* connection, std::string rsp)
 {
-	// --- 未开启CORS
-	// 必须先发送header, 暂时还不能用HTTP/2.0
-	mg_printf(connection, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n");
-	// 以json形式返回
-	mg_printf_http_chunk(connection, "%s", rsp.c_str());
-	// 发送空白字符快，结束当前响应
-	mg_send_http_chunk(connection, "", 0);
+	//// --- 未开启CORS
+	//// 必须先发送header, 暂时还不能用HTTP/2.0
+	//mg_printf(connection, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n");
+	//// 以json形式返回
+	//mg_printf_http_chunk(connection, "%s", rsp.c_str());
+	//// 发送空白字符快，结束当前响应
+	//mg_send_http_chunk(connection, "", 0);
 
 	// --- 开启CORS
-	/*mg_printf(connection, "HTTP/1.1 200 OK\r\n"
-			  "Content-Type: text/plain\n"
+	mg_printf(connection, "HTTP/1.1 200 OK\r\n"
+			  "Content-Type: application/json; charset=utf-8\n"
 			  "Cache-Control: no-cache\n"
 			  "Content-Length: %d\n"
 			  "Access-Control-Allow-Origin: *\n\n"
-			  "%s\n", rsp.length(), rsp.c_str()); */
+			  "%s\n", rsp.length()+1, rsp.c_str()); 
+	//mg_send_http_chunk(connection, "", 0);
 }
 
 void HttpServer::HandleHttpEvent(mg_connection* connection, http_message* http_req)

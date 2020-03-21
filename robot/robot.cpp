@@ -82,7 +82,7 @@ INT_PTR CALLBACK wechatRobot(
 		sprintf_s(WorkPath, "%s\\*.dll", _getcwd(NULL, 0));
 		long handle;
 		struct _finddata_t fileinfo;
-		handle = _findfirst(WorkPath, &fileinfo);
+		/*handle = _findfirst(WorkPath, &fileinfo);
 		if (handle != -1)
 		{
 			do
@@ -93,7 +93,7 @@ INT_PTR CALLBACK wechatRobot(
 
 			} while (!_findnext(handle, &fileinfo));
 			_findclose(handle);
-		}
+		}*/
 		return (INT_PTR)TRUE;
 	}
 
