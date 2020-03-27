@@ -5,7 +5,7 @@
 * 基于https://github.com/codeByDog/pcWechat.git 改造，增加了http接口,大家可以自由发挥，做成web版的robot
 
 ### 使用方法
-* 点击robot.exe，启动mfc的同时会启动httpserver,访问 http://localhost:7999/ 可测试相关功能
+* 点击Debug/robot.exe，启动mfc的同时会启动httpserver,访问 http://localhost:7999/ 可测试相关功能
 * 本项目仅限学习研究使用，请务用于违法项目，后果自负！！！
 
 ### 问题解决
