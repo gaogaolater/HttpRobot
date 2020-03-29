@@ -1,7 +1,7 @@
 # HttpRobot
 
 ### 背景
-* 只适配 2.8.112版本微信
+* 只适配 2.8.112版本wx
 * 基于https://github.com/codeByDog/pcWechat.git 改造，增加了http接口,大家可以自由发挥，做成web版的robot
 
 ### 使用方法
